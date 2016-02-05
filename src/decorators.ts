@@ -1,4 +1,4 @@
-/// <reference path="../typings/tsd.d.ts" />
+/// <reference path="../typings/angularjs/angular.d.ts" />
 
 interface ModuleConstructor extends FunctionConstructor {
   new (module: ng.IModule): any;
@@ -138,7 +138,7 @@ export function ngApp(element: string | Element | JQuery | Document, name?: stri
     }
 
     function bootstrap() {
-      angular.element(element).ready(() => {
+      document.addEventListener("DOMContentLoaded", () => {
         angular.bootstrap(element, [target.$name]);
       });
     }

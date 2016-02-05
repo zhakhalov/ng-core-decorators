@@ -108,7 +108,7 @@ export function ngApp(element, name) {
             new target(angular.module(name, target.$inject || []));
         }
         function bootstrap() {
-            angular.element(element).ready(() => {
+            document.addEventListener("DOMContentLoaded", () => {
                 angular.bootstrap(element, [target.$name]);
             });
         }
