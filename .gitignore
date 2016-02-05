@@ -1,0 +1,11 @@
+# development dependencies
+node_modules/
+
+# caches
+/.tscache
+
+# typescript definitions use $ tsd install
+/typings
+
+# typescript generated command
+/**/*.tmp.txt

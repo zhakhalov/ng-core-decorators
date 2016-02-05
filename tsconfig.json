@@ -1,0 +1,18 @@
+{
+  "compilerOptions": {
+    "module": "es6",
+    "noImplicitAny": true,
+    "preserveConstEnums": true,
+    "experimentalDecorators": true,
+    "declaration": true,
+    "target": "es6",
+    "rootDir": "src",
+    "outDir": "dist",
+    "noResolve": true
+  },
+  "exclude": [
+    "node_modules",
+    "test",
+    "dist"
+  ]
+}
