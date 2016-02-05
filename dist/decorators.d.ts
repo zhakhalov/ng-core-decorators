@@ -1,21 +1,21 @@
-export declare function ngInject(dependency: string): ParameterDecorator;
-export declare function ngDepencencies(...dependencies: string[]): ClassDecorator;
-export declare function ngService(module: ng.IModule | string, name: string): ClassDecorator;
-export declare function ngServiceFactory(module: ng.IModule | string, name: string): MethodDecorator;
-export declare function ngController(module: ng.IModule | string, name: string): ClassDecorator;
-export declare function ngFactory(module: ng.IModule | string, name: string): ClassDecorator;
-export declare function ngDirective(module: ng.IModule | string, name: string, directive: ng.IDirective): ClassDecorator;
-export declare function ngProvider(module: ng.IModule | string, name: string): ClassDecorator;
-export declare function ngConstant(module: ng.IModule | string, name: string): ClassDecorator;
-export declare function ngValue(module: ng.IModule | string, name: string): ClassDecorator;
-export declare function ngConfig(module: ng.IModule | string): ClassDecorator;
-export declare function ngRun(module: ng.IModule | string): ClassDecorator;
+export declare function Inject(dependency: string): ParameterDecorator;
+export declare function Depencencies(...dependencies: string[]): ClassDecorator;
+export declare function Service(module: ng.IModule | string, name: string): ClassDecorator;
+export declare function ServiceFactory(module: ng.IModule | string, name: string): MethodDecorator;
+export declare function Controller(module: ng.IModule | string, name: string): ClassDecorator;
+export declare function Factory(module: ng.IModule | string, name: string): ClassDecorator;
+export declare function Directive(module: ng.IModule | string, name: string, directive: ng.IDirective): ClassDecorator;
+export declare function Provider(module: ng.IModule | string, name: string): ClassDecorator;
+export declare function Constant(module: ng.IModule | string, name: string): ClassDecorator;
+export declare function Value(module: ng.IModule | string, name: string): ClassDecorator;
+export declare function Config(module: ng.IModule | string): ClassDecorator;
+export declare function Run(module: ng.IModule | string): ClassDecorator;
 /**
  * Use @ngDepencencies to declare dependencies
  */
-export declare function ngModule(name: string): ClassDecorator;
+export declare function Module(name: string): ClassDecorator;
 /**
  * If name specified new module will be registered.
  * Use @ngDepencencies to declare dependencies
  */
-export declare function ngApp(element: string | Element | JQuery | Document, name?: string): ClassDecorator;
+export declare function App(element: string | Element | JQuery | Document, name?: string): ClassDecorator;

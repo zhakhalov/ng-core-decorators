@@ -9,7 +9,7 @@ interface IWindow extends Window {
   $importPromise: ng.IPromise<any>;
 }
 
-export function ngInject(dependency: string): ParameterDecorator {
+export function Inject(dependency: string): ParameterDecorator {
   return function(target: any, key: string, index: number) {
     target = key ? target[key] : target;
     target.$inject = target.$inject || [];
@@ -17,34 +17,34 @@ export function ngInject(dependency: string): ParameterDecorator {
   };
 }
 
-export function ngDepencencies(...dependencies: string[]): ClassDecorator {
+export function Depencencies(...dependencies: string[]): ClassDecorator {
   return function(target: Function) {
     target.$inject = dependencies || [];
   };
 }
 
-export function ngService(module: ng.IModule | string, name: string): ClassDecorator {
+export function Service(module: ng.IModule | string, name: string): ClassDecorator {
   return function(target: Function) {
     module = getModule(module);
     (module as ng.IModule).service(name, target);
   };
 }
 
-export function ngServiceFactory(module: ng.IModule | string, name: string): MethodDecorator {
+export function ServiceFactory(module: ng.IModule | string, name: string): MethodDecorator {
   return function(target: any, key: string) {
     module = getModule(module);
     (module as ng.IModule).service(name, target[key]);
   };
 }
 
-export function ngController(module: ng.IModule | string, name: string): ClassDecorator {
+export function Controller(module: ng.IModule | string, name: string): ClassDecorator {
   return function(target: Function) {
     module = getModule(module);
     (module as ng.IModule).controller(name, target);
   };
 }
 
-export function ngFactory(module: ng.IModule | string, name: string): ClassDecorator {
+export function Factory(module: ng.IModule | string, name: string): ClassDecorator {
   return function(target: FunctionConstructor) {
 
     function factory() {
@@ -58,7 +58,7 @@ export function ngFactory(module: ng.IModule | string, name: string): ClassDecor
   };
 }
 
-export function ngDirective(module: ng.IModule | string, name: string, directive: ng.IDirective): ClassDecorator {
+export function Directive(module: ng.IModule | string, name: string, directive: ng.IDirective): ClassDecorator {
   return function(target: FunctionConstructor) {
     module = getModule(module);
     (module as ng.IModule).directive(name, function() {
@@ -67,28 +67,28 @@ export function ngDirective(module: ng.IModule | string, name: string, directive
   };
 }
 
-export function ngProvider(module: ng.IModule | string, name: string): ClassDecorator {
+export function Provider(module: ng.IModule | string, name: string): ClassDecorator {
   return function(target: ng.IServiceProviderFactory) {
     module = getModule(module);
     (module as ng.IModule).provider(name, target);
   };
 }
 
-export function ngConstant(module: ng.IModule | string, name: string): ClassDecorator {
+export function Constant(module: ng.IModule | string, name: string): ClassDecorator {
   return function(target: FunctionConstructor) {
     module = getModule(module);
     (module as ng.IModule).constant(name, new target());
   };
 }
 
-export function ngValue(module: ng.IModule | string, name: string): ClassDecorator {
+export function Value(module: ng.IModule | string, name: string): ClassDecorator {
   return function(target: FunctionConstructor) {
     module = getModule(module);
     (module as ng.IModule).value(name, new target());
   };
 }
 
-export function ngConfig(module: ng.IModule | string): ClassDecorator {
+export function Config(module: ng.IModule | string): ClassDecorator {
   return function(target: FunctionConstructor) {
 
     function config() {
@@ -102,7 +102,7 @@ export function ngConfig(module: ng.IModule | string): ClassDecorator {
   };
 }
 
-export function ngRun(module: ng.IModule | string): ClassDecorator {
+export function Run(module: ng.IModule | string): ClassDecorator {
   return function(target: FunctionConstructor) {
 
     function run() {
@@ -119,7 +119,7 @@ export function ngRun(module: ng.IModule | string): ClassDecorator {
 /**
  * Use @ngDepencencies to declare dependencies
  */
-export function ngModule(name: string): ClassDecorator {
+export function Module(name: string): ClassDecorator {
   return function(target: ModuleConstructor) {
     target.$name = name;
     new target(angular.module(name, target.$inject || []));
@@ -130,7 +130,7 @@ export function ngModule(name: string): ClassDecorator {
  * If name specified new module will be registered.
  * Use @ngDepencencies to declare dependencies
  */
-export function ngApp(element: string | Element | JQuery | Document, name?: string): ClassDecorator {
+export function App(element: string | Element | JQuery | Document, name?: string): ClassDecorator {
   return function(target: ModuleConstructor) {
     if (name) {
       target.$name = name;

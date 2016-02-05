@@ -1,35 +1,35 @@
-/// <reference path="../typings/tsd.d.ts" />
-export function ngInject(dependency) {
+/// <reference path="../typings/angularjs/angular.d.ts" />
+export function Inject(dependency) {
     return function (target, key, index) {
         target = key ? target[key] : target;
         target.$inject = target.$inject || [];
         target.$inject[index] = dependency;
     };
 }
-export function ngDepencencies(...dependencies) {
+export function Depencencies(...dependencies) {
     return function (target) {
         target.$inject = dependencies || [];
     };
 }
-export function ngService(module, name) {
+export function Service(module, name) {
     return function (target) {
         module = getModule(module);
         module.service(name, target);
     };
 }
-export function ngServiceFactory(module, name) {
+export function ServiceFactory(module, name) {
     return function (target, key) {
         module = getModule(module);
         module.service(name, target[key]);
     };
 }
-export function ngController(module, name) {
+export function Controller(module, name) {
     return function (target) {
         module = getModule(module);
         module.controller(name, target);
     };
 }
-export function ngFactory(module, name) {
+export function Factory(module, name) {
     return function (target) {
         function factory() {
             const context = Object.create(target.prototype);
@@ -40,7 +40,7 @@ export function ngFactory(module, name) {
         module.factory(name, factory);
     };
 }
-export function ngDirective(module, name, directive) {
+export function Directive(module, name, directive) {
     return function (target) {
         module = getModule(module);
         module.directive(name, function () {
@@ -48,25 +48,25 @@ export function ngDirective(module, name, directive) {
         });
     };
 }
-export function ngProvider(module, name) {
+export function Provider(module, name) {
     return function (target) {
         module = getModule(module);
         module.provider(name, target);
     };
 }
-export function ngConstant(module, name) {
+export function Constant(module, name) {
     return function (target) {
         module = getModule(module);
         module.constant(name, new target());
     };
 }
-export function ngValue(module, name) {
+export function Value(module, name) {
     return function (target) {
         module = getModule(module);
         module.value(name, new target());
     };
 }
-export function ngConfig(module) {
+export function Config(module) {
     return function (target) {
         function config() {
             const context = Object.create(target.prototype);
@@ -77,7 +77,7 @@ export function ngConfig(module) {
         module.config(config);
     };
 }
-export function ngRun(module) {
+export function Run(module) {
     return function (target) {
         function run() {
             const context = Object.create(target.prototype);
@@ -91,7 +91,7 @@ export function ngRun(module) {
 /**
  * Use @ngDepencencies to declare dependencies
  */
-export function ngModule(name) {
+export function Module(name) {
     return function (target) {
         target.$name = name;
         new target(angular.module(name, target.$inject || []));
@@ -101,7 +101,7 @@ export function ngModule(name) {
  * If name specified new module will be registered.
  * Use @ngDepencencies to declare dependencies
  */
-export function ngApp(element, name) {
+export function App(element, name) {
     return function (target) {
         if (name) {
             target.$name = name;
