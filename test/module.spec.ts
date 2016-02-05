@@ -1,38 +1,26 @@
 /// <reference path="../typings/tsd.d.ts" />
 
 import {
-ngModule,
+Module,
 } from 'src/decorators';
 
-describe('#ngModule', () => {
+describe('#Module', () => {
 
-  it('should fail defines module es5 way', () => {
-    expect(() => angular.module('module1')).toThrow();
-  });
+  it('should define module with Module decorator', () => {
 
-  it('should success defines module es5 way', () => {
-    angular.module('module1', []);
-  });
-
-  it('should access module es5 way', () => {
-    angular.module('module1');
-  });
-
-  it('should define module with ngModule decorator', () => {
-
-    @ngModule('module2')
+    @Module('module2#Module')
     class Module2 {
       constructor (
         module: ng.IModule
       ) {
         expect(module).toBeDefined();
-        expect(module).toBe(angular.module('module2'));
+        expect(module).toBe(angular.module('module2#Module'));
       }
     }
   });
 
-  it('should access module defined with ngModule decorator', () => {
-    angular.module('module2');
+  it('should access module defined with Module decorator', () => {
+    angular.module('module2#Module');
   });
 
 });

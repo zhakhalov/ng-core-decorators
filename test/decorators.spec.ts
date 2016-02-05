@@ -1,60 +1,60 @@
 /// <reference path="../typings/tsd.d.ts" />
 
 import {
-ngInject,
-ngConstant,
-ngConfig,
-ngValue,
-ngRun,
-ngModule,
-ngApp,
-ngDepencencies,
-ngService,
-ngServiceFactory,
-ngController,
-ngFactory,
-ngDirective,
-ngProvider
+Inject,
+Constant,
+Config,
+Value,
+Run,
+Module,
+App,
+Depencencies,
+Service,
+ServiceFactory,
+Controller,
+Factory,
+Directive,
+Provider
 } from 'src/decorators';
 
-describe('#ngDecorators', () => {
-  it('ngInject should be defined', () => {
-    expect(ngInject).toBeDefined();
+describe('#Decorators', () => {
+  it('Inject should be defined', () => {
+    expect(Inject).toBeDefined();
   });
-  it('ngConstant should be defined', () => {
-    expect(ngConstant).toBeDefined();
+  it('Constant should be defined', () => {
+    expect(Constant).toBeDefined();
   });
-  it('ngConfig should be defined', () => {
-    expect(ngConfig).toBeDefined();
+  it('Config should be defined', () => {
+    expect(Config).toBeDefined();
   });
-  it('ngValue should be defined', () => {
-    expect(ngValue).toBeDefined();
+  it('Value should be defined', () => {
+    expect(Value).toBeDefined();
   });
-  it('ngRun should be defined', () => {
-    expect(ngRun).toBeDefined();
+  it('Run should be defined', () => {
+    expect(Run).toBeDefined();
   });
-  it('ngModule should be defined', () => {
-    expect(ngModule).toBeDefined();
+  it('Module should be defined', () => {
+    expect(Module).toBeDefined();
   });
-  it('ngApp should be defined', () => {
-    expect(ngApp).toBeDefined();
+  it('App should be defined', () => {
+    expect(App).toBeDefined();
   });
-  it('ngDepencencies should be defined', () => {
-    expect(ngDepencencies).toBeDefined();
+  it('Depencencies should be defined', () => {
+    expect(Depencencies).toBeDefined();
   });
-  it('ngService should be defined', () => {
-    expect(ngService).toBeDefined();
+  it('Service should be defined', () => {
+    expect(Service).toBeDefined();
   });
-  it('ngController should be defined', () => {
-    expect(ngController).toBeDefined();
+  it('Controller should be defined', () => {
+    expect(Controller).toBeDefined();
   });
-  it('ngFactory should be defined', () => {
-    expect(ngFactory).toBeDefined();
+  it('Factory should be defined', () => {
+    expect(Factory).toBeDefined();
   });
-  it('ngDirective should be defined', () => {
-    expect(ngDirective).toBeDefined();
+  it('Directive should be defined', () => {
+    expect(Directive).toBeDefined();
   });
-  it('ngProvider should be defined', () => {
-    expect(ngProvider).toBeDefined();
+  it('Provider should be defined', () => {
+    expect(Provider).toBeDefined();
   });
 });

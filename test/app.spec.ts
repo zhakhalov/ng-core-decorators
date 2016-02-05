@@ -1,15 +1,15 @@
 /// <reference path="../typings/tsd.d.ts" />
 
 import {
-ngApp,
+App,
 } from 'src/decorators';
 
 describe('#ngApp', () => {
 
   it('should define module with ngApp decorator', () => {
 
-    @ngApp(document, 'app')
-    class App {
+    @App(document, 'app')
+    class Application {
       constructor(
         module: ng.IModule
         ) {
