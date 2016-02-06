@@ -1,6 +1,28 @@
 # @Decorators
 
-ES2016 decorators(annotations) for declarative module organization in Angular 1.x applications
+
+ES2016 decorators(annotations) for basic AngularJS 1.x providers
+
+### Table of Contents
+- [@Module](#module)
+- [@App](#requires)
+- [@Inject](#inject)
+- [@Service](#service)
+- [@ServiceFactory](#servicefactory)
+- [@Controller](#controller)
+- [@Factory](#factory)
+- [@Filter](#filter)
+- [@ClassFactory](#classfactory)
+- [@Directive](#directive)
+- [@DirectiveFactory](#directivefactory)
+- [@Provider](#provider)
+- [@ProviderFactory](#providerfactory)
+- [@Constant](#constant)
+- [@Value](#value)
+- [@Config](#config)
+- [@Run](#run)
+
+### [How To](#how-to-use)
 
 # Usage
 
@@ -189,7 +211,7 @@ Declare angular with decorated class.
 
 ##### TypeScript / ES2016 way
 ``` typescript
-@Service(Application, 'AppController')
+@Controller(Application, 'AppController')
 class AppController {
   constructor(
     @Inject('$localStorate') private $localStorate: {},
@@ -324,14 +346,13 @@ Declare angular directive with decorated factory method.
 
 ##### TypeScript / ES2016 way
 ``` typescript
-@Directive(Application, 'appComponent', {
-  restrict: 'E',
-  contollerAs: 'ctrl'
-  template: '<div>Hello, {{ctrl.who}}!</div>'
-})
 class AppComponentFactory {
 
-  @DirectiveFactory(Application, 'appComponent')
+  @DirectiveFactory(Application, 'appComponent', {
+    restrict: 'E',
+    contollerAs: 'ctrl'
+    template: '<div>Hello, {{ctrl.who}}!</div>'
+  })
   public static AppComponentFactory(
     @Inject('$scope') $scope: ng.IScope
   ) {
@@ -382,8 +403,8 @@ function DbProvider ($locationProvider) {
 DbProvider.prototype.$get = function () {
   return this;
 }
-DbService.$inject = ['$localStorate', '$resource'];
-DatabaseModule.provider('DbProvider', DbService)
+DbProvider.$inject = ['$localStorate', '$resource'];
+DatabaseModule.provider('DbProvider', DbProvider)
 ```
 
 ---
@@ -391,11 +412,57 @@ DatabaseModule.provider('DbProvider', DbService)
 ## @ProviderFactory
 Declare angular service provider with decorated factory method.
 
+##### TypeScript / ES2016 way
+``` typescript
+
+class DbProvider implements ng.IServiceProviderFactory {
+  @ProviderFactory(DatabaseModule, 'DbProvider')
+  public static DbProviderFactory(
+    @Inject('$locationProvider') $locationProvider: ng.ILocationProvider
+  ) {
+    return  {
+      $get: function () {
+        return 0; // or anything else
+      }
+    }
+  }
+}
+
+```
+##### ES5 Angular 1.x way
+``` javascript
+function DbProvider ($locationProvider) {
+
+}
+DbProvider.prototype.$get = function () {
+  return this;
+}
+DbProvider.$inject = ['$localStorate', '$resource'];
+DatabaseModule.provider('DbProvider', DbProvider)
+```
+
 ---
 
 ## @Constant
 Declare angular constant provider with decorated class.
 Injections are unavailable for this type of providers.
+
+##### TypeScript / ES2016 way
+``` typescript
+
+@Constant(DatabaseModule, 'DbCredentilas')
+class DbCredentilas  {
+  public connectionString = 'mongodb://...';
+}
+
+```
+##### ES5 Angular 1.x way
+``` javascript
+function DbCredentilas () {
+  this.connectionString = 'mongodb://...'
+}
+DatabaseModule.constant('DbCredentilas', new DbCredentilas())
+```
 
 ---
 
@@ -403,19 +470,74 @@ Injections are unavailable for this type of providers.
 Declare angular value provider with decorated class.
 Injections are unavailable for this type of providers.
 
+##### TypeScript / ES2016 way
+``` typescript
+
+@Value(DatabaseModule, 'DbCredentilas')
+class DbCredentilas  {
+  public connectionString = 'mongodb://...';
+}
+
+```
+##### ES5 Angular 1.x way
+``` javascript
+function DbCredentilas () {
+  this.connectionString = 'mongodb://...'
+}
+DatabaseModule.value('DbCredentilas', new DbCredentilas())
+```
+
 ---
 
 ## @Config
 Declare angular config clause with decorated class. New instance of decorated class will be instantiated inside config clause.
+
+##### TypeScript / ES2016 way
+``` typescript
+
+@Config(DatabaseModule)
+class DbConfig  {
+  constructor(
+    @Inject('DbCredentilas') private credentials: any
+  ) {
+    this.credentials; // this.constrctor === DbConfig
+  }
+}
+
+```
+##### ES5 Angular 1.x way
+``` javascript
+DatabaseModule.config(function (DbCredentilas) {
+
+})
+```
 
 ---
 
 ## @Run
 Declare angular run clause with decorated class. New instance of decorated class will be instantiated inside run clause.
 
+##### TypeScript / ES2016 way
+``` typescript
 
+@Run(DatabaseModule)
+class DbConfig  {
+  constructor(
+    @Inject('DbCredentilas') private credentials: any
+  ) {
+    this.credentials; // this.constrctor === DbConfig
+  }
+}
 
+```
+##### ES5 Angular 1.x way
+``` javascript
+DatabaseModule.run(function (DbCredentilas) {
 
+})
+```
+
+---
 
 # How to use
 
