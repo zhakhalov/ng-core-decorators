@@ -1,7 +1,6 @@
 # @Decorators
 
-
-ES2016 decorators(annotations) for basic AngularJS 1.x providers
+ECMAScript7 decorators for core Angular1.x providers
 
 ### Table of Contents
 - [@Module](#module)
@@ -30,8 +29,8 @@ ES2016 decorators(annotations) for basic AngularJS 1.x providers
 Declare angular module with given name.
 
 Note:
-- `@Requires` decorator should be put next line to the `@Module`.
-- angular module instance will be passed to constructor.
+- `@Requires` decorator has to be put next line to the `@Module`.
+- `ng.IModule` instance will be passed to constructor.
 
 ##### TypeScript
 ``` typescript
@@ -98,11 +97,23 @@ Declare angular module with given name.
 Note:
 - `@Requires` decorator should be put next line to the `@App`.
 - If module already defined it will be used to bootstrap aplication.
-- angular module instance will be passed to constructor.
+- `ng.IModule` instance will be passed to constructor.
+- If `window.$bootstrap` defined waits fot it's resolving to start bootstraping.
 
 ##### TypeScript
 ``` typescript
 @App(angular.element('body'), 'Application')
+@Requires('ngResource', 'ngStorage')
+class Application {
+  constructor(
+    module: ng.IModule
+  ) {}
+}
+```
+
+``` typescript
+@App(angular.element('body'))
+@Module('Application')
 @Requires('ngResource', 'ngStorage')
 class Application {
   constructor(
@@ -542,12 +553,12 @@ DatabaseModule.run(function (DbCredentilas) {
 # How to use
 
 `/dist/decorators.js` file oplimized for usage with SystemJS modularizer.
-I use following trick to run all registered modules.
+I use following trick to load all registered modules.
 
 ```html
 <script src="build/app.vendor.js"></script> <!-- can contains system.js and decorators.js -->
 <script src="bower_components/system.js/dist/system.js"></script> <!-- can be included to concatenation of 3-p libs -->
-<script src="bower_components/ng-decorators/dist/decorators.js"></script> <!-- can be included to concatenation of 3-p libs -->
+<script src="bower_components/ng-decorators/dist/system/decorators.js"></script> <!-- can be included to concatenation of 3-p libs -->
 <script src="build/app.bundle.js"></script>
 <script src="entry.js"></script>
 ```
@@ -556,13 +567,17 @@ and this small js to start application
 
 ##### entry.js
 ```javascript
+// or any other Promise
 var $injector = angular.injector(['ng']);
 var $q = $injector.get('$q');
+
 var imports = [];
 for (var defined in System.defined) {
   imports.push(System.import(defined));
 }
-window.$importPromise = $q.all(imports)
+
+// used to ensure all modules are loaded before call angular.bootstrap(...)
+window.$bootstrap = $q.all(imports)
 .catch(function (err) {
   console.error(err);
   throw err;
@@ -594,5 +609,3 @@ AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
 LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
 OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
 THE SOFTWARE.
-
-Source: http://opensource.org/licenses/MIT

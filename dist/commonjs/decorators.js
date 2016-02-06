@@ -1,38 +1,33 @@
 /// <reference path="../typings/angularjs/angular.d.ts" />
-
-interface ModuleConstructor extends FunctionConstructor {
-  new (module: ng.IModule): any;
-  $name: string;
-}
-
-interface IWindow extends Window {
-  $bootstrap: ng.IPromise<any>;
-}
-
+"use strict";
 /**
  * Define parameter injection to constructor or function
  * @param {string} dependency - name of provider to include as
  * @returns {ParameterDecorator}
  */
-export function Inject(dependency: string): ParameterDecorator {
-  return function(target: any, key: string, index: number) {
-    target = key ? target[key] : target;
-    target.$inject = target.$inject || [];
-    target.$inject[index] = dependency;
-  };
+function Inject(dependency) {
+    return function (target, key, index) {
+        target = key ? target[key] : target;
+        target.$inject = target.$inject || [];
+        target.$inject[index] = dependency;
+    };
 }
-
+exports.Inject = Inject;
 /**
  * Define module or service injection requirements.
  * @param {string} requires - 1 or more names of modules to require for module injection or providers to inject to constructor.
  * @returns {ClassDecorator}
  */
-export function Requires(...requires: string[]): ClassDecorator {
-  return function(target: Function) {
-    target.$inject = requires || [];
-  };
+function Requires() {
+    var requires = [];
+    for (var _i = 0; _i < arguments.length; _i++) {
+        requires[_i - 0] = arguments[_i];
+    }
+    return function (target) {
+        target.$inject = requires || [];
+    };
 }
-
+exports.Requires = Requires;
 /**
  * Declare angular service as class
  * Use @Depencencies to declare class requirements or @Inject in case of parameter based requirement declaration.
@@ -40,13 +35,13 @@ export function Requires(...requires: string[]): ClassDecorator {
  * @param {string} name - name of defined service
  * @returns {ClassDecorator}
  */
-export function Service(module: ng.IModule | string, name: string): ClassDecorator {
-  return function(target: Function) {
-    module = resolveModule(module);
-    (module as ng.IModule).service(name, target);
-  };
+function Service(module, name) {
+    return function (target) {
+        module = resolveModule(module);
+        module.service(name, target);
+    };
 }
-
+exports.Service = Service;
 /**
  * Declare angular service with decorated factory method.
  * Use @Depencencies to declare class requirements or @Inject in case of parameter based requirement declaration.
@@ -54,13 +49,13 @@ export function Service(module: ng.IModule | string, name: string): ClassDecorat
  * @param {string} name - name of defined service
  * @returns {MethodDecorator}
  */
-export function ServiceFactory(module: ng.IModule | string, name: string): MethodDecorator {
-  return function(target: any, key: string) {
-    module = resolveModule(module);
-    (module as ng.IModule).service(name, target[key]);
-  };
+function ServiceFactory(module, name) {
+    return function (target, key) {
+        module = resolveModule(module);
+        module.service(name, target[key]);
+    };
 }
-
+exports.ServiceFactory = ServiceFactory;
 /**
  * Declare angular controller as class.
  * Use @Depencencies to declare requirements or @Inject in case of parameter based requirement declaration.
@@ -68,13 +63,13 @@ export function ServiceFactory(module: ng.IModule | string, name: string): Metho
  * @param {string} name - name of defined controller
  * @returns {ClassDecorator}
  */
-export function Controller(module: ng.IModule | string, name: string): ClassDecorator {
-  return function(target: Function) {
-    module = resolveModule(module);
-    (module as ng.IModule).controller(name, target);
-  };
+function Controller(module, name) {
+    return function (target) {
+        module = resolveModule(module);
+        module.controller(name, target);
+    };
 }
-
+exports.Controller = Controller;
 /**
  * Declare angular factory as factory method.
  * Use @Depencencies to declare requirements or @Inject in case of parameter based requirement declaration
@@ -82,13 +77,13 @@ export function Controller(module: ng.IModule | string, name: string): ClassDeco
  * @param {string} name - name of defined factory
  * @returns {MethodDecorator}
  */
-export function Factory(module: ng.IModule | string, name: string): MethodDecorator {
-  return function(target: any, key: string) {
-    module = resolveModule(module);
-    (module as ng.IModule).factory(name, target[key]);
-  };
+function Factory(module, name) {
+    return function (target, key) {
+        module = resolveModule(module);
+        module.factory(name, target[key]);
+    };
 }
-
+exports.Factory = Factory;
 /**
  * Declare angular factory with decorated factory method.
  * Use @Depencencies to declare requirements or @Inject in case of parameter based requirement declaration.
@@ -96,13 +91,13 @@ export function Factory(module: ng.IModule | string, name: string): MethodDecora
  * @param {string} name - name of defined filter
  * @returns {MethodDecorator}
  */
-export function Filter(module: ng.IModule | string, name: string): MethodDecorator {
-  return function(target: any, key: string) {
-    module = resolveModule(module);
-    (module as ng.IModule).filter(name, target[key]);
-  };
+function Filter(module, name) {
+    return function (target, key) {
+        module = resolveModule(module);
+        module.filter(name, target[key]);
+    };
 }
-
+exports.Filter = Filter;
 /**
  * Declare angular factory as class.
  * New instance of factory decorated class will be instantiated for each injection.
@@ -111,20 +106,18 @@ export function Filter(module: ng.IModule | string, name: string): MethodDecorat
  * @param {string} name - name of defined factory
  * @returns {ClassDecorator}
  */
-export function ClassFactory(module: ng.IModule | string, name: string): ClassDecorator {
-  return function(target: FunctionConstructor) {
-
-    function factory() {
-      const context = Object.create(target.prototype);
-      return target.apply(context, arguments);
-    }
-    factory.$inject = target.$inject || [];
-
-    module = resolveModule(module);
-    (module as ng.IModule).factory(name, factory);
-  };
+function ClassFactory(module, name) {
+    return function (target) {
+        function factory() {
+            var context = Object.create(target.prototype);
+            return target.apply(context, arguments);
+        }
+        factory.$inject = target.$inject || [];
+        module = resolveModule(module);
+        module.factory(name, factory);
+    };
 }
-
+exports.ClassFactory = ClassFactory;
 /**
  * Declare angular directive with decorated class as controller.
  * Use @Depencencies to declare requirements or @Inject in case of parameter based requirement declaration.
@@ -133,15 +126,15 @@ export function ClassFactory(module: ng.IModule | string, name: string): ClassDe
  * @param {ng.IDirective} [directive] = {} - directive params.
  * @returns {ClassDecorator}
  */
-export function Directive(module: ng.IModule | string, name: string, directive?: ng.IDirective): ClassDecorator {
-  return function(target: FunctionConstructor) {
-    module = resolveModule(module);
-    (module as ng.IModule).directive(name, function() {
-      return angular.extend(directive || {}, { controller: target });
-    });
-  };
+function Directive(module, name, directive) {
+    return function (target) {
+        module = resolveModule(module);
+        module.directive(name, function () {
+            return angular.extend(directive || {}, { controller: target });
+        });
+    };
 }
-
+exports.Directive = Directive;
 /**
  * Declare angular directive with decorated factory method.
  * Use @Depencencies to declare requirements or @Inject in case of parameter based requirement declaration.
@@ -150,13 +143,13 @@ export function Directive(module: ng.IModule | string, name: string, directive?:
  * @param {ng.IDirective} [directive] = {} - directive params.
  * @returns {ClassDecorator}
  */
-export function DirectiveFactory(module: ng.IModule | string, name: string): MethodDecorator {
-  return function(target: FunctionConstructor) {
-    module = resolveModule(module);
-    (module as ng.IModule).directive(name, target);
-  };
+function DirectiveFactory(module, name) {
+    return function (target) {
+        module = resolveModule(module);
+        module.directive(name, target);
+    };
 }
-
+exports.DirectiveFactory = DirectiveFactory;
 /**
  * Declare angular service provider with decorated class.
  * Use @Depencencies to declare requirements or @Inject in case of parameter based requirement declaration.
@@ -165,13 +158,13 @@ export function DirectiveFactory(module: ng.IModule | string, name: string): Met
  * @param {string} name - name of defined provider.
  * @returns {ClassDecorator}
  */
-export function Provider(module: ng.IModule | string, name: string): ClassDecorator {
-  return function(target: ng.IServiceProviderFactory) {
-    module = resolveModule(module);
-    (module as ng.IModule).provider(name, target);
-  };
+function Provider(module, name) {
+    return function (target) {
+        module = resolveModule(module);
+        module.provider(name, target);
+    };
 }
-
+exports.Provider = Provider;
 /**
  * Declare angular service provider with decorated factory method.
  * Use @Depencencies to declare requirements or @Inject in case of parameter based requirement declaration.
@@ -179,13 +172,13 @@ export function Provider(module: ng.IModule | string, name: string): ClassDecora
  * @param {string} name - name of defined directive.
  * @returns {MethodDecorator}
  */
-export function ProviderFactory(module: ng.IModule | string, name: string): MethodDecorator {
-  return function(target: ng.IServiceProviderFactory) {
-    module = resolveModule(module);
-    (module as ng.IModule).provider(name, target);
-  };
+function ProviderFactory(module, name) {
+    return function (target) {
+        module = resolveModule(module);
+        module.provider(name, target);
+    };
 }
-
+exports.ProviderFactory = ProviderFactory;
 /**
  * Declare angular constant provider with decorated class.
  * Injections are unavailable for this type of providers.
@@ -193,13 +186,13 @@ export function ProviderFactory(module: ng.IModule | string, name: string): Meth
  * @param {string} name - name of defined constant.
  * @returns {MethodDecorator}
  */
-export function Constant(module: ng.IModule | string, name: string): ClassDecorator {
-  return function(target: FunctionConstructor) {
-    module = resolveModule(module);
-    (module as ng.IModule).constant(name, new target());
-  };
+function Constant(module, name) {
+    return function (target) {
+        module = resolveModule(module);
+        module.constant(name, new target());
+    };
 }
-
+exports.Constant = Constant;
 /**
  * Declare angular value provider with decorated class.
  * Injections are unavailable for this type of providers.
@@ -207,13 +200,13 @@ export function Constant(module: ng.IModule | string, name: string): ClassDecora
  * @param {string} name - name of defined value.
  * @returns {MethodDecorator}
  */
-export function Value(module: ng.IModule | string, name: string): ClassDecorator {
-  return function(target: FunctionConstructor) {
-    module = resolveModule(module);
-    (module as ng.IModule).value(name, new target());
-  };
+function Value(module, name) {
+    return function (target) {
+        module = resolveModule(module);
+        module.value(name, new target());
+    };
 }
-
+exports.Value = Value;
 /**
  * Declare angular config clause with decorated class. New instance of decorated class will be instantiated inside config clause.
  * Use @Depencencies to declare requirements or @Inject in case of parameter based requirement declaration.
@@ -221,40 +214,36 @@ export function Value(module: ng.IModule | string, name: string): ClassDecorator
  * @param {ng.IModule | string} module - name or instance of angular module in which config clause should be defined.
  * @returns {ClassDecorator}
  */
-export function Config(module: ng.IModule | string): ClassDecorator {
-  return function(target: FunctionConstructor) {
-
-    function config() {
-      const context = Object.create(target.prototype);
-      target.apply(context, arguments);
-    }
-    config.$inject = target.$inject || [];
-
-    module = resolveModule(module);
-    (module as ng.IModule).config(config);
-  };
+function Config(module) {
+    return function (target) {
+        function config() {
+            var context = Object.create(target.prototype);
+            target.apply(context, arguments);
+        }
+        config.$inject = target.$inject || [];
+        module = resolveModule(module);
+        module.config(config);
+    };
 }
-
+exports.Config = Config;
 /**
  * Declare angular run clause with decorated class. New instance of decorated class will be instantiated inside run clause.
  * Use @Depencencies to declare requirements or @Inject in case of parameter based requirement declaration.
  * @param {ng.IModule | string} module - name or instance of angular module in which run clause should be defined.
  * @returns {ClassDecorator}
  */
-export function Run(module: ng.IModule | string): ClassDecorator {
-  return function(target: FunctionConstructor) {
-
-    function run() {
-      const context = Object.create(target.prototype);
-      target.apply(context, arguments);
-    }
-    run.$inject = target.$inject || [];
-
-    module = resolveModule(module);
-    (module as ng.IModule).run(run);
-  };
+function Run(module) {
+    return function (target) {
+        function run() {
+            var context = Object.create(target.prototype);
+            target.apply(context, arguments);
+        }
+        run.$inject = target.$inject || [];
+        module = resolveModule(module);
+        module.run(run);
+    };
 }
-
+exports.Run = Run;
 /**
  * Declare angular module with given name.
  * Use @Depencencies to declare requirements.
@@ -263,13 +252,13 @@ export function Run(module: ng.IModule | string): ClassDecorator {
  * @param {string} name - name of module.
  * @returns {ClassDecorator}
  */
-export function Module(name: string): ClassDecorator {
-  return function(target: ModuleConstructor) {
-    target.$name = name;
-    new target(angular.module(name, target.$inject || []));
-  };
+function Module(name) {
+    return function (target) {
+        target.$name = name;
+        new target(angular.module(name, target.$inject || []));
+    };
 }
-
+exports.Module = Module;
 /**
  * Declare angular module with given name.
  * Use @Depencencies to declare requirements.
@@ -279,35 +268,35 @@ export function Module(name: string): ClassDecorator {
  * @param {string} name - name of module.
  * @returns {ClassDecorator}
  */
-export function App(element: (string | Element | JQuery | Document) = document, name = 'app'): ClassDecorator {
-  return function(target: ModuleConstructor) {
-    let module: ng.IModule;
-    target.$name = name;
-
-    try {
-      module = angular.module(name);
-    } catch (err) {
-      module = angular.module(name, target.$inject || [])
-    }
-    new target(angular.module(name, target.$inject || []));
-
-    function bootstrap() {
-      document.addEventListener("DOMContentLoaded", () => {
-        angular.bootstrap(element, [target.$name]);
-      });
-    }
-
-    if ((window as IWindow).$bootstrap) {
-      (window as IWindow).$bootstrap.then(bootstrap);
-    } else {
-      bootstrap();
-    }
-  };
+function App(element, name) {
+    if (element === void 0) { element = document; }
+    if (name === void 0) { name = 'app'; }
+    return function (target) {
+        var module;
+        target.$name = name;
+        try {
+            module = angular.module(name);
+        }
+        catch (err) {
+            module = angular.module(name, target.$inject || []);
+        }
+        new target(angular.module(name, target.$inject || []));
+        function bootstrap() {
+            document.addEventListener("DOMContentLoaded", function () {
+                angular.bootstrap(element, [target.$name]);
+            });
+        }
+        if (window.$bootstrap) {
+            window.$bootstrap.then(bootstrap);
+        }
+        else {
+            bootstrap();
+        }
+    };
 }
-
-
-function resolveModule(module: ng.IModule | string) {
-  return (angular.isString(module)
-    ? angular.module(module as string)
-    : (module as ng.IModule));
+exports.App = App;
+function resolveModule(module) {
+    return (angular.isString(module)
+        ? angular.module(module)
+        : module);
 }

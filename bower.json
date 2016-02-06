@@ -1,8 +1,8 @@
 {
-  "name": "ng-decorators",
+  "name": "ng-core-decorators",
   "version": "0.0.1",
-  "description": "ECMAScript7 decorators for declarative dependency management in Angular1.x projecnts",
-  "main": "dist/decorators.js",
+  "description": "ECMAScript7 decorators for core Angular1.x providers",
+  "main": "dist/commonjs/decorators.js",
   "authors": [
     "Viktor Zhakhalov <zhakhalov@gmail.com>"
   ],
@@ -18,7 +18,7 @@
     "ECMAScript7",
     "ECMAScript2016"
   ],
-  "homepage": "https://github.com/zhakhalov/ng-decorators",
+  "homepage": "https://github.com/zhakhalov/ng-core-decorators",
   "repository": {
     "type": "git",
     "url": "git://github.com/zhakhalov/ng-decorators.git"

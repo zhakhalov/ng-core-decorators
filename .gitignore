@@ -10,3 +10,7 @@ bower_components/
 
 # typescript generated command
 /**/*.tmp.txt
+
+.baseDir.ts
+.baseDir.d.ts
+.baseDir.js

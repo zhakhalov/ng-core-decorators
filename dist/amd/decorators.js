@@ -1,5 +1,5 @@
-/// <reference path="../angularjs/angular.d.ts" />
-System.register("decorators", [], function(exports_1) {
+/// <reference path="../typings/angularjs/angular.d.ts" />
+define("decorators", ["require", "exports"], function (require, exports) {
     "use strict";
     /**
      * Define parameter injection to constructor or function
@@ -13,7 +13,7 @@ System.register("decorators", [], function(exports_1) {
             target.$inject[index] = dependency;
         };
     }
-    exports_1("Inject", Inject);
+    exports.Inject = Inject;
     /**
      * Define module or service injection requirements.
      * @param {string} requires - 1 or more names of modules to require for module injection or providers to inject to constructor.
@@ -28,7 +28,7 @@ System.register("decorators", [], function(exports_1) {
             target.$inject = requires || [];
         };
     }
-    exports_1("Requires", Requires);
+    exports.Requires = Requires;
     /**
      * Declare angular service as class
      * Use @Depencencies to declare class requirements or @Inject in case of parameter based requirement declaration.
@@ -42,7 +42,7 @@ System.register("decorators", [], function(exports_1) {
             module.service(name, target);
         };
     }
-    exports_1("Service", Service);
+    exports.Service = Service;
     /**
      * Declare angular service with decorated factory method.
      * Use @Depencencies to declare class requirements or @Inject in case of parameter based requirement declaration.
@@ -56,7 +56,7 @@ System.register("decorators", [], function(exports_1) {
             module.service(name, target[key]);
         };
     }
-    exports_1("ServiceFactory", ServiceFactory);
+    exports.ServiceFactory = ServiceFactory;
     /**
      * Declare angular controller as class.
      * Use @Depencencies to declare requirements or @Inject in case of parameter based requirement declaration.
@@ -70,7 +70,7 @@ System.register("decorators", [], function(exports_1) {
             module.controller(name, target);
         };
     }
-    exports_1("Controller", Controller);
+    exports.Controller = Controller;
     /**
      * Declare angular factory as factory method.
      * Use @Depencencies to declare requirements or @Inject in case of parameter based requirement declaration
@@ -84,7 +84,7 @@ System.register("decorators", [], function(exports_1) {
             module.factory(name, target[key]);
         };
     }
-    exports_1("Factory", Factory);
+    exports.Factory = Factory;
     /**
      * Declare angular factory with decorated factory method.
      * Use @Depencencies to declare requirements or @Inject in case of parameter based requirement declaration.
@@ -98,7 +98,7 @@ System.register("decorators", [], function(exports_1) {
             module.filter(name, target[key]);
         };
     }
-    exports_1("Filter", Filter);
+    exports.Filter = Filter;
     /**
      * Declare angular factory as class.
      * New instance of factory decorated class will be instantiated for each injection.
@@ -118,7 +118,7 @@ System.register("decorators", [], function(exports_1) {
             module.factory(name, factory);
         };
     }
-    exports_1("ClassFactory", ClassFactory);
+    exports.ClassFactory = ClassFactory;
     /**
      * Declare angular directive with decorated class as controller.
      * Use @Depencencies to declare requirements or @Inject in case of parameter based requirement declaration.
@@ -135,7 +135,7 @@ System.register("decorators", [], function(exports_1) {
             });
         };
     }
-    exports_1("Directive", Directive);
+    exports.Directive = Directive;
     /**
      * Declare angular directive with decorated factory method.
      * Use @Depencencies to declare requirements or @Inject in case of parameter based requirement declaration.
@@ -150,7 +150,7 @@ System.register("decorators", [], function(exports_1) {
             module.directive(name, target);
         };
     }
-    exports_1("DirectiveFactory", DirectiveFactory);
+    exports.DirectiveFactory = DirectiveFactory;
     /**
      * Declare angular service provider with decorated class.
      * Use @Depencencies to declare requirements or @Inject in case of parameter based requirement declaration.
@@ -165,7 +165,7 @@ System.register("decorators", [], function(exports_1) {
             module.provider(name, target);
         };
     }
-    exports_1("Provider", Provider);
+    exports.Provider = Provider;
     /**
      * Declare angular service provider with decorated factory method.
      * Use @Depencencies to declare requirements or @Inject in case of parameter based requirement declaration.
@@ -179,7 +179,7 @@ System.register("decorators", [], function(exports_1) {
             module.provider(name, target);
         };
     }
-    exports_1("ProviderFactory", ProviderFactory);
+    exports.ProviderFactory = ProviderFactory;
     /**
      * Declare angular constant provider with decorated class.
      * Injections are unavailable for this type of providers.
@@ -193,7 +193,7 @@ System.register("decorators", [], function(exports_1) {
             module.constant(name, new target());
         };
     }
-    exports_1("Constant", Constant);
+    exports.Constant = Constant;
     /**
      * Declare angular value provider with decorated class.
      * Injections are unavailable for this type of providers.
@@ -207,7 +207,7 @@ System.register("decorators", [], function(exports_1) {
             module.value(name, new target());
         };
     }
-    exports_1("Value", Value);
+    exports.Value = Value;
     /**
      * Declare angular config clause with decorated class. New instance of decorated class will be instantiated inside config clause.
      * Use @Depencencies to declare requirements or @Inject in case of parameter based requirement declaration.
@@ -226,7 +226,7 @@ System.register("decorators", [], function(exports_1) {
             module.config(config);
         };
     }
-    exports_1("Config", Config);
+    exports.Config = Config;
     /**
      * Declare angular run clause with decorated class. New instance of decorated class will be instantiated inside run clause.
      * Use @Depencencies to declare requirements or @Inject in case of parameter based requirement declaration.
@@ -244,7 +244,7 @@ System.register("decorators", [], function(exports_1) {
             module.run(run);
         };
     }
-    exports_1("Run", Run);
+    exports.Run = Run;
     /**
      * Declare angular module with given name.
      * Use @Depencencies to declare requirements.
@@ -259,11 +259,11 @@ System.register("decorators", [], function(exports_1) {
             new target(angular.module(name, target.$inject || []));
         };
     }
-    exports_1("Module", Module);
+    exports.Module = Module;
     /**
      * Declare angular module with given name.
      * Use @Depencencies to declare requirements.
-     * Note: @Depencencies decorator should be put next line to the @Module.
+     * Note: @Depencencies decorator should be put next line to the @App.
      * Note: If module already defined it will be used to bootstrap aplication.
      * Note: angular module instance will be passed to constructor.
      * @param {string} name - name of module.
@@ -287,23 +287,18 @@ System.register("decorators", [], function(exports_1) {
                     angular.bootstrap(element, [target.$name]);
                 });
             }
-            if (window.$importPromise) {
-                window.$importPromise.then(bootstrap);
+            if (window.$bootstrap) {
+                window.$bootstrap.then(bootstrap);
             }
             else {
                 bootstrap();
             }
         };
     }
-    exports_1("App", App);
+    exports.App = App;
     function resolveModule(module) {
         return (angular.isString(module)
             ? angular.module(module)
             : module);
-    }
-    return {
-        setters:[],
-        execute: function() {
-        }
     }
 });
