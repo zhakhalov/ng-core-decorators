@@ -1,7 +1,7 @@
 {
   "name": "ng-decorators",
-  "version": "0.0.1-alpha",
-  "description": "ECMAScript7 decorators for declaring dependency injection in Angular1.x projecnts",
+  "version": "0.0.1",
+  "description": "ECMAScript7 decorators for declarative dependency management in Angular1.x projecnts",
   "main": "dist/decorators.js",
   "scripts": {
     "test": "karma start"
@@ -17,8 +17,12 @@
      "ECMAScript7",
      "ECMAScript2016"
   ],
+  "repository": {
+    "type": "git",
+    "url": "git://github.com/zhakhalov/ng-decorators.git"
+  },
   "author": "Viktor Zhakhalov <zhakhalov@gmail.com>",
-  "license": "ISC",
+  "license": "MIT",
   "devDependencies": {
     "angular": "^1.4.9",
     "angular-mocks": "^1.4.9",

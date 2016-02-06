@@ -1,5 +1,6 @@
 # development dependencies
 node_modules/
+bower_components/
 
 # caches
 /.tscache
