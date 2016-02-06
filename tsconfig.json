@@ -1,13 +1,13 @@
 {
   "compilerOptions": {
-    "module": "es6",
+    "module": "system",
     "noImplicitAny": true,
     "preserveConstEnums": true,
     "experimentalDecorators": true,
     "declaration": true,
-    "target": "es6",
+    "target": "es5",
     "rootDir": "src",
-    "outDir": "dist",
+    "outFile": "dist/decorators.js",
     "noResolve": true
   },
   "exclude": [

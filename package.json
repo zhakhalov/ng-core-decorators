@@ -1,12 +1,23 @@
 {
   "name": "ng-decorators",
-  "version": "1.0.0",
-  "description": "es7 decorators for declaring dependency injection in Angular1.x projecnts",
+  "version": "0.0.1-alpha",
+  "description": "ECMAScript7 decorators for declaring dependency injection in Angular1.x projecnts",
   "main": "dist/decorators.js",
   "scripts": {
     "test": "karma start"
   },
-  "author": "",
+  "keywords": [
+     "typescript",
+     "angular",
+     "decorators",
+     "annotations",
+     "angularjs",
+     "es7",
+     "es2016",
+     "ECMAScript7",
+     "ECMAScript2016"
+  ],
+  "author": "Viktor Zhakhalov <zhakhalov@gmail.com>",
   "license": "ISC",
   "devDependencies": {
     "angular": "^1.4.9",

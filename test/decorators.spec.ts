@@ -8,7 +8,7 @@ Value,
 Run,
 Module,
 App,
-Depencencies,
+Requires,
 Service,
 ServiceFactory,
 Controller,
@@ -39,8 +39,8 @@ describe('#Decorators', () => {
   it('App should be defined', () => {
     expect(App).toBeDefined();
   });
-  it('Depencencies should be defined', () => {
-    expect(Depencencies).toBeDefined();
+  it('Requires should be defined', () => {
+    expect(Requires).toBeDefined();
   });
   it('Service should be defined', () => {
     expect(Service).toBeDefined();
