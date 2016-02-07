@@ -151,9 +151,9 @@ export function Directive(module: ng.IModule | string, name: string, directive?:
  * @returns {ClassDecorator}
  */
 export function DirectiveFactory(module: ng.IModule | string, name: string): MethodDecorator {
-  return function(target: FunctionConstructor) {
+  return function(target: any, key: string) {
     module = resolveModule(module);
-    (module as ng.IModule).directive(name, target);
+    (module as ng.IModule).directive(name, target[key]);
   };
 }
 
@@ -180,9 +180,9 @@ export function Provider(module: ng.IModule | string, name: string): ClassDecora
  * @returns {MethodDecorator}
  */
 export function ProviderFactory(module: ng.IModule | string, name: string): MethodDecorator {
-  return function(target: ng.IServiceProviderFactory) {
+  return function(target: any, key: string) {
     module = resolveModule(module);
-    (module as ng.IModule).provider(name, target);
+    (module as ng.IModule).provider(name, target[key]);
   };
 }
 

@@ -130,9 +130,9 @@ export function Directive(module, name, directive) {
  * @returns {ClassDecorator}
  */
 export function DirectiveFactory(module, name) {
-    return function (target) {
+    return function (target, key) {
         module = resolveModule(module);
-        module.directive(name, target);
+        module.directive(name, target[key]);
     };
 }
 /**
@@ -157,9 +157,9 @@ export function Provider(module, name) {
  * @returns {MethodDecorator}
  */
 export function ProviderFactory(module, name) {
-    return function (target) {
+    return function (target, key) {
         module = resolveModule(module);
-        module.provider(name, target);
+        module.provider(name, target[key]);
     };
 }
 /**

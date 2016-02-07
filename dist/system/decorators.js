@@ -145,9 +145,9 @@ System.register("decorators", [], function(exports_1) {
      * @returns {ClassDecorator}
      */
     function DirectiveFactory(module, name) {
-        return function (target) {
+        return function (target, key) {
             module = resolveModule(module);
-            module.directive(name, target);
+            module.directive(name, target[key]);
         };
     }
     exports_1("DirectiveFactory", DirectiveFactory);
@@ -174,9 +174,9 @@ System.register("decorators", [], function(exports_1) {
      * @returns {MethodDecorator}
      */
     function ProviderFactory(module, name) {
-        return function (target) {
+        return function (target, key) {
             module = resolveModule(module);
-            module.provider(name, target);
+            module.provider(name, target[key]);
         };
     }
     exports_1("ProviderFactory", ProviderFactory);
