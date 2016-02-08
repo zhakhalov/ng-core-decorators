@@ -292,9 +292,7 @@ export function App(element: (string | Element | JQuery | Document) = document, 
     new target(angular.module(name, target.$inject || []));
 
     function bootstrap() {
-      document.addEventListener("DOMContentLoaded", () => {
-        angular.bootstrap(element, [target.$name]);
-      });
+      angular.bootstrap(element, [target.$name]);
     }
 
     if ((window as IWindow).$bootstrap) {

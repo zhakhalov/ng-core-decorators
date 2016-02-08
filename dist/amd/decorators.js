@@ -283,9 +283,7 @@ define("decorators", ["require", "exports"], function (require, exports) {
             }
             new target(angular.module(name, target.$inject || []));
             function bootstrap() {
-                document.addEventListener("DOMContentLoaded", function () {
-                    angular.bootstrap(element, [target.$name]);
-                });
+                angular.bootstrap(element, [target.$name]);
             }
             if (window.$bootstrap) {
                 window.$bootstrap.then(bootstrap);
