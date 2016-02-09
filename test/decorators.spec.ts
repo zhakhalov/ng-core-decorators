@@ -14,7 +14,11 @@ ServiceFactory,
 Controller,
 Factory,
 Directive,
-Provider
+Provider,
+Filter,
+ClassFactory,
+DirectiveFactory,
+ProviderFactory
 } from 'src/decorators';
 
 describe('#Decorators', () => {
@@ -56,5 +60,17 @@ describe('#Decorators', () => {
   });
   it('Provider should be defined', () => {
     expect(Provider).toBeDefined();
+  });
+  it('Filter should be defined', () => {
+    expect(Filter).toBeDefined();
+  });
+  it('ClassFactory should be defined', () => {
+    expect(ClassFactory).toBeDefined();
+  });
+  it('DirectiveFactory should be defined', () => {
+    expect(DirectiveFactory).toBeDefined();
+  });
+  it('ProviderFactory should be defined', () => {
+    expect(ProviderFactory).toBeDefined();
   });
 });
