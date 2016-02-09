@@ -77,6 +77,11 @@ grunt.initConfig({
         'dist/commonjs/decorators.min.js': ['dist/commonjs/decorators.js']
       }
     }
+  },
+  karma: {
+    default: {
+      configFile: 'karma.conf.js'
+    }
   }
 });
 
@@ -84,5 +89,7 @@ grunt.loadNpmTasks('grunt-ts');
 grunt.loadNpmTasks('grunt-rename');
 grunt.loadNpmTasks('grunt-contrib-uglify');
 grunt.loadNpmTasks('grunt-contrib-clean');
+grunt.loadNpmTasks('grunt-karma');
 
 grunt.registerTask('build', ['clean','ts', 'rename', 'uglify']);
+grunt.registerTask('test', ['karma']);
