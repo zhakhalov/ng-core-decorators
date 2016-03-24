@@ -14,7 +14,7 @@ declare module "decorators" {
     export function Requires(...requires: string[]): ClassDecorator;
     /**
      * Declare angular service as class
-     * Use @Depencencies to declare class requirements or @Inject in case of parameter based requirement declaration.
+     * Use @Requires to declare class requirements or @Inject in case of parameter based requirement declaration.
      * @param {ng.IModule | string} module - name or instance of angular module in which service should be defined.
      * @param {string} name - name of defined service
      * @returns {ClassDecorator}
@@ -22,7 +22,7 @@ declare module "decorators" {
     export function Service(module: ng.IModule | string, name: string): ClassDecorator;
     /**
      * Declare angular service with decorated factory method.
-     * Use @Depencencies to declare class requirements or @Inject in case of parameter based requirement declaration.
+     * Use @Requires to declare class requirements or @Inject in case of parameter based requirement declaration.
      * @param {ng.IModule | string} module - name or instance of angular module in which service should be defined.
      * @param {string} name - name of defined service
      * @returns {MethodDecorator}
@@ -30,7 +30,7 @@ declare module "decorators" {
     export function ServiceFactory(module: ng.IModule | string, name: string): MethodDecorator;
     /**
      * Declare angular controller as class.
-     * Use @Depencencies to declare requirements or @Inject in case of parameter based requirement declaration.
+     * Use @Requires to declare requirements or @Inject in case of parameter based requirement declaration.
      * @param {ng.IModule | string} module - name or instance of angular module in which service should be defined.
      * @param {string} name - name of defined controller
      * @returns {ClassDecorator}
@@ -38,7 +38,7 @@ declare module "decorators" {
     export function Controller(module: ng.IModule | string, name: string): ClassDecorator;
     /**
      * Declare angular factory as factory method.
-     * Use @Depencencies to declare requirements or @Inject in case of parameter based requirement declaration
+     * Use @Requires to declare requirements or @Inject in case of parameter based requirement declaration
      * @param {ng.IModule | string} module - name or instance of angular module in which service should be defined.
      * @param {string} name - name of defined factory
      * @returns {MethodDecorator}
@@ -46,7 +46,7 @@ declare module "decorators" {
     export function Factory(module: ng.IModule | string, name: string): MethodDecorator;
     /**
      * Declare angular factory with decorated factory method.
-     * Use @Depencencies to declare requirements or @Inject in case of parameter based requirement declaration.
+     * Use @Requires to declare requirements or @Inject in case of parameter based requirement declaration.
      * @param {ng.IModule | string} module - name or instance of angular module in which service should be defined.
      * @param {string} name - name of defined filter
      * @returns {MethodDecorator}
@@ -55,7 +55,7 @@ declare module "decorators" {
     /**
      * Declare angular factory as class.
      * New instance of factory decorated class will be instantiated for each injection.
-     * Use @Depencencies to declare requirements or @Inject in case of parameter based requirement declaration.
+     * Use @Requires to declare requirements or @Inject in case of parameter based requirement declaration.
      * @param {ng.IModule | string} module - name or instance of angular module in which service should be defined.
      * @param {string} name - name of defined factory
      * @returns {ClassDecorator}
@@ -63,7 +63,7 @@ declare module "decorators" {
     export function ClassFactory(module: ng.IModule | string, name: string): ClassDecorator;
     /**
      * Declare angular directive with decorated class as controller.
-     * Use @Depencencies to declare requirements or @Inject in case of parameter based requirement declaration.
+     * Use @Requires to declare requirements or @Inject in case of parameter based requirement declaration.
      * @param {ng.IModule | string} module - name or instance of angular module in which directive should be defined.
      * @param {string} name - name of defined directive.
      * @param {ng.IDirective} [directive] = {} - directive params.
@@ -71,8 +71,17 @@ declare module "decorators" {
      */
     export function Directive(module: ng.IModule | string, name: string, directive?: ng.IDirective): ClassDecorator;
     /**
+     * Declare angular component with decorated class as controller.
+     * Use @Requires to declare requirements or @Inject in case of parameter based requirement declaration.
+     * @param {ng.IModule | string} module - name or instance of angular module in which directive should be defined.
+     * @param {string} name - name of defined directive.
+     * @param {ng.IDirective} [directive] = {} - directive params.
+     * @returns {ClassDecorator}
+     */
+    export function Component(module: ng.IModule | string, name: string, component?: ng.IComponentOptions): ClassDecorator;
+    /**
      * Declare angular directive with decorated factory method.
-     * Use @Depencencies to declare requirements or @Inject in case of parameter based requirement declaration.
+     * Use @Requires to declare requirements or @Inject in case of parameter based requirement declaration.
      * @param {ng.IModule | string} module - name or instance of angular module in which directive should be defined.
      * @param {string} name - name of defined directive.
      * @param {ng.IDirective} [directive] = {} - directive params.
@@ -81,7 +90,7 @@ declare module "decorators" {
     export function DirectiveFactory(module: ng.IModule | string, name: string): MethodDecorator;
     /**
      * Declare angular service provider with decorated class.
-     * Use @Depencencies to declare requirements or @Inject in case of parameter based requirement declaration.
+     * Use @Requires to declare requirements or @Inject in case of parameter based requirement declaration.
      * New instance of provider decorated class will be instantiated once.
      * @param {ng.IModule | string} module - name or instance of angular module in which provider should be defined.
      * @param {string} name - name of defined provider.
@@ -90,7 +99,7 @@ declare module "decorators" {
     export function Provider(module: ng.IModule | string, name: string): ClassDecorator;
     /**
      * Declare angular service provider with decorated factory method.
-     * Use @Depencencies to declare requirements or @Inject in case of parameter based requirement declaration.
+     * Use @Requires to declare requirements or @Inject in case of parameter based requirement declaration.
      * @param {ng.IModule | string} module - name or instance of angular module in which provider should be defined.
      * @param {string} name - name of defined directive.
      * @returns {MethodDecorator}
@@ -114,7 +123,7 @@ declare module "decorators" {
     export function Value(module: ng.IModule | string, name: string): ClassDecorator;
     /**
      * Declare angular config clause with decorated class. New instance of decorated class will be instantiated inside config clause.
-     * Use @Depencencies to declare requirements or @Inject in case of parameter based requirement declaration.
+     * Use @Requires to declare requirements or @Inject in case of parameter based requirement declaration.
      * Only providers as constants able to be injected at config stage.
      * @param {ng.IModule | string} module - name or instance of angular module in which config clause should be defined.
      * @returns {ClassDecorator}
@@ -122,15 +131,15 @@ declare module "decorators" {
     export function Config(module: ng.IModule | string): ClassDecorator;
     /**
      * Declare angular run clause with decorated class. New instance of decorated class will be instantiated inside run clause.
-     * Use @Depencencies to declare requirements or @Inject in case of parameter based requirement declaration.
+     * Use @Requires to declare requirements or @Inject in case of parameter based requirement declaration.
      * @param {ng.IModule | string} module - name or instance of angular module in which run clause should be defined.
      * @returns {ClassDecorator}
      */
     export function Run(module: ng.IModule | string): ClassDecorator;
     /**
      * Declare angular module with given name.
-     * Use @Depencencies to declare requirements.
-     * Note: @Depencencies decorator should be put next line to the @Module.
+     * Use @Requires to declare requirements.
+     * Note: @Requires decorator should be put next line to the @Module.
      * Note: angular module instance will be passed to constructor.
      * @param {string} name - name of module.
      * @returns {ClassDecorator}
@@ -138,8 +147,8 @@ declare module "decorators" {
     export function Module(name: string): ClassDecorator;
     /**
      * Declare angular module with given name.
-     * Use @Depencencies to declare requirements.
-     * Note: @Depencencies decorator should be put next line to the @App.
+     * Use @Requires to declare requirements.
+     * Note: @Requires decorator should be put next line to the @App.
      * Note: If module already defined it will be used to bootstrap aplication.
      * Note: angular module instance will be passed to constructor.
      * @param {string} name - name of module.

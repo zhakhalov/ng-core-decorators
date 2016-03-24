@@ -4,7 +4,8 @@ ECMAScript7 decorators for core Angular1.x providers
 
 ### Table of Contents
 - [@Module](#module)
-- [@App](#requires)
+- [@Requires](#requires)
+- [@App](#app)
 - [@Inject](#inject)
 - [@Service](#service)
 - [@ServiceFactory](#servicefactory)
@@ -385,6 +386,35 @@ Application.directive('appComponent', function () {
   }
 })
 ```
+
+## @Component
+Declare angular directive with decorated class as controller.
+
+##### TypeScript / ES2016 way
+``` typescript
+@Component(Application, 'appComponent', {
+  template: '<div>Hello, {{$ctrl.who}}!</div>'
+})
+class AppComponentController {
+  constructor(
+    @Inject('$scope') private $scope: ng.IScope
+  ) {}
+}
+
+```
+
+##### ES5 Angular 1.x way
+``` javascript
+function AppComponentController ($scope) {
+}
+AppComponentController.$inject = ['$scope'];
+Application.component('appComponent', {
+  controller: AppComponentController,
+  template: '<div>Hello, {{$ctrl.who}}!</div>'
+})
+```
+
+---
 
 ---
 
