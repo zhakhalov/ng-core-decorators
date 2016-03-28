@@ -314,7 +314,7 @@ export function App(element: (string | Element | JQuery | Document) = document, 
     if ((window as IWindow).$bootstrap) {
       (window as IWindow).$bootstrap.then(bootstrap);
     } else {
-      bootstrap();
+      angular.element(element).ready(bootstrap);
     }
   };
 }

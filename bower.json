@@ -1,6 +1,6 @@
 {
   "name": "ng-core-decorators",
-  "version": "0.0.4",
+  "version": "0.0.5",
   "description": "ECMAScript7 decorators for core Angular1.x providers",
   "main": "dist/commonjs/decorators.js",
   "authors": [
