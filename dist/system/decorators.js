@@ -304,7 +304,7 @@ System.register("decorators", [], function(exports_1) {
                 window.$bootstrap.then(bootstrap);
             }
             else {
-                bootstrap();
+                angular.element(element).ready(bootstrap);
             }
         };
     }

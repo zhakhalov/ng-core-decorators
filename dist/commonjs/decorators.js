@@ -303,7 +303,7 @@ function App(element, name) {
             window.$bootstrap.then(bootstrap);
         }
         else {
-            bootstrap();
+            angular.element(element).ready(bootstrap);
         }
     };
 }

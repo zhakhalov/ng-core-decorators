@@ -304,7 +304,7 @@ define("decorators", ["require", "exports"], function (require, exports) {
                 window.$bootstrap.then(bootstrap);
             }
             else {
-                bootstrap();
+                angular.element(element).ready(bootstrap);
             }
         };
     }

@@ -278,7 +278,7 @@ export function App(element = document, name = 'app') {
             window.$bootstrap.then(bootstrap);
         }
         else {
-            bootstrap();
+            angular.element(element).ready(bootstrap);
         }
     };
 }
