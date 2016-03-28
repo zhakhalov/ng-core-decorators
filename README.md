@@ -14,6 +14,7 @@ ECMAScript7 decorators for core Angular1.x providers
 - [@Filter](#filter)
 - [@ClassFactory](#classfactory)
 - [@Directive](#directive)
+- [@Component](#component)
 - [@DirectiveFactory](#directivefactory)
 - [@Provider](#provider)
 - [@ProviderFactory](#providerfactory)
