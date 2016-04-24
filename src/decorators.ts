@@ -1,5 +1,3 @@
-/// <reference path="../typings/angularjs/angular.d.ts" />
-
 interface ModuleConstructor extends FunctionConstructor {
   new (module: ng.IModule): any;
   $name: string;
@@ -319,6 +317,62 @@ export function App(element: (string | Element | JQuery | Document) = document, 
   };
 }
 
+/**
+ *
+ */
+export function Resource(
+  module: string | ng.IModule,
+  name: string,
+  url: string,
+  paramsDefault: { [key: string]: string | number | boolean | (() => any) } = {},
+  actions: { [key: string]: ng.resource.IActionDescriptor } = {},
+  options: {} = {}
+): ClassDecorator {
+  return function (target: Function) {
+    angular.element(document).ready(() => {
+      module = resolveModule(module);
+
+      (module as ng.IModule).service(`${name}__resourceClass`, target);
+      (module as ng.IModule).service(name, ['$injector', `${name}__resourceClass`, function ($injector: any, resourceClass: Function) {
+        const resourceProviderName = $injector.has('$pouchResource') ? '$pouchResource'
+          : $injector.has('$cachedResource') ? '$cachedResource'
+          : '$resource';
+        const $resource = $injector.get(resourceProviderName);
+        const resource = resourceProviderName === '$pouchResource' ||
+          resourceProviderName === '$cachedResource'
+          ? $resource(name, url, paramsDefault, actions, options)
+          : $resource(url, paramsDefault, actions, options);
+
+        angular.extend(resource, resourceClass);
+        angular.extend(resource, resourceClass.constructor.prototype);
+
+        return resource;
+      }]);
+    });
+  };
+}
+
+/**
+ * Declare UIRouter state with decorated class as controller.
+ * @link https://angular-ui.github.io/ui-router/site/#/api/ui.router
+ * Note: controllerAs: $ctrl - User $ctrl for binding to controller in templates
+ * @param {ng.IModule | string} module - name or instance of angular module in which config clause should be defined.
+ * @param {string} stateName - name of UIRouter state state.
+ * @param {ng.ui.IState} [config = {}] - state config params.
+ * @returns {ClassDecorator}
+ */
+export function Page(module: ng.IModule | string, stateName: string, config: ng.ui.IState = {}): ClassDecorator {
+  return function (target: Function) {
+    module = resolveModule(module);
+    (module as ng.IModule).config(['$stateProvider', function ($stateProvider: ng.ui.IStateProvider) {
+      $stateProvider
+        .state(stateName, angular.extend({
+          controller: target,
+          controllerAs: '$ctrl'
+        }, config));
+    }]);
+  };
+}
 
 function resolveModule(module: ng.IModule | string) {
   return (angular.isString(module)

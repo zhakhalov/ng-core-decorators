@@ -6,12 +6,11 @@
     "experimentalDecorators": true,
     "declaration": true,
     "target": "es5",
-    "rootDir": "src",
-    "outFile": "dist/decorators.js",
-    "noResolve": true
+    "rootDir": ".",
+    "outFile": "dist/decorators.js"
   },
-  "exclude": [
-    "node_modules",
-    "dist"
+  "files": [
+    "typings/tsd.d.ts",
+    "src/decorators.ts"
   ]
 }

@@ -1,4 +1,3 @@
-/// <reference path="../../typings/angularjs/angular.d.ts" />
 declare module "decorators" {
     /**
      * Define parameter injection to constructor or function
@@ -155,4 +154,22 @@ declare module "decorators" {
      * @returns {ClassDecorator}
      */
     export function App(element?: (string | Element | JQuery | Document), name?: string): ClassDecorator;
+    /**
+     *
+     */
+    export function Resource(module: string | ng.IModule, name: string, url: string, paramsDefault?: {
+        [key: string]: string | number | boolean | (() => any);
+    }, actions?: {
+        [key: string]: ng.resource.IActionDescriptor;
+    }, options?: {}): ClassDecorator;
+    /**
+     * Declare UIRouter state with decorated class as controller.
+     * @link https://angular-ui.github.io/ui-router/site/#/api/ui.router
+     * Note: controllerAs: $ctrl - User $ctrl for binding to controller in templates
+     * @param {ng.IModule | string} module - name or instance of angular module in which config clause should be defined.
+     * @param {string} stateName - name of UIRouter state state.
+     * @param {ng.ui.IState} [config = {}] - state config params.
+     * @returns {ClassDecorator}
+     */
+    export function Page(module: ng.IModule | string, stateName: string, config?: ng.ui.IState): ClassDecorator;
 }

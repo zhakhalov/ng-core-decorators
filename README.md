@@ -8,6 +8,7 @@ ECMAScript7 decorators for core Angular1.x providers
 - [@App](#app)
 - [@Inject](#inject)
 - [@Service](#service)
+- [@Resource](#resource)
 - [@ServiceFactory](#servicefactory)
 - [@Controller](#controller)
 - [@Factory](#factory)
@@ -15,6 +16,7 @@ ECMAScript7 decorators for core Angular1.x providers
 - [@ClassFactory](#classfactory)
 - [@Directive](#directive)
 - [@Component](#component)
+- [@Page](#page)
 - [@DirectiveFactory](#directivefactory)
 - [@Provider](#provider)
 - [@ProviderFactory](#providerfactory)
@@ -219,6 +221,32 @@ DatabaseModule.service('dbService', DbService)
 
 ---
 
+## @Resource
+Declares ngResource service [$resource](https://docs.angularjs.org/api/ngResource/service/$resource).
+Will user [Angular cached resource](https://github.com/goodeggs/angular-cached-resource) if such provider registered.
+Otherwise will create new service using `$resource` provider.
+
+##### TypeScript / ES2016 way
+``` typescript
+@Resource(Application, 'UsersResource', '/api/users/:id', {
+  id: '@id
+}, {
+})
+class UsersResource {
+
+  constructor(
+    @Inject('$q') private $q: ng.IQService
+  ) {
+  }
+
+  public fullName(): ng.IPromise<string> {
+    return this.$q.resolve(`${this.firstName} ${this.lastName}`);
+  }
+}
+```
+
+---
+
 ## @Controller
 Declare angular with decorated class.
 
@@ -388,6 +416,8 @@ Application.directive('appComponent', function () {
 })
 ```
 
+---
+
 ## @Component
 Declare angular directive with decorated class as controller.
 
@@ -414,8 +444,6 @@ Application.component('appComponent', {
   template: '<div>Hello, {{$ctrl.who}}!</div>'
 })
 ```
-
----
 
 ---
 

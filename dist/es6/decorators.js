@@ -1,4 +1,3 @@
-/// <reference path="../typings/angularjs/angular.d.ts" />
 /**
  * Define parameter injection to constructor or function
  * @param {string} dependency - name of provider to include as
@@ -280,6 +279,50 @@ export function App(element = document, name = 'app') {
         else {
             angular.element(element).ready(bootstrap);
         }
+    };
+}
+/**
+ *
+ */
+export function Resource(module, name, url, paramsDefault = {}, actions = {}, options = {}) {
+    return function (target) {
+        angular.element(document).ready(() => {
+            module = resolveModule(module);
+            module.service(`${name}__resourceClass`, target);
+            module.service(name, ['$injector', `${name}__resourceClass`, function ($injector, resourceClass) {
+                    const resourceProviderName = $injector.has('$cachedResource')
+                        ? '$cachedResource'
+                        : '$resource';
+                    const $resource = $injector.get(resourceProviderName);
+                    const resource = resourceProviderName === '$cachedResource'
+                        ? $resource(name, url, paramsDefault, actions, options)
+                        : $resource(url, paramsDefault, actions, options);
+                    angular.extend(resource, resourceClass);
+                    angular.extend(resource.prototype, resourceClass.prototype);
+                    return resource;
+                }]);
+        });
+    };
+}
+/**
+ * Declare UIRouter state with decorated class as controller.
+ * @link https://angular-ui.github.io/ui-router/site/#/api/ui.router
+ * Note: controllerAs: $ctrl - User $ctrl for binding to controller in templates
+ * @param {ng.IModule | string} module - name or instance of angular module in which config clause should be defined.
+ * @param {string} stateName - name of UIRouter state state.
+ * @param {ng.ui.IState} [config = {}] - state config params.
+ * @returns {ClassDecorator}
+ */
+export function Page(module, stateName, config = {}) {
+    return function (target) {
+        module = resolveModule(module);
+        module.config(['$stateProvider', function ($stateProvider) {
+                $stateProvider
+                    .state(stateName, angular.extend({
+                    controller: target,
+                    controllerAs: '$ctrl'
+                }, config));
+            }]);
     };
 }
 function resolveModule(module) {

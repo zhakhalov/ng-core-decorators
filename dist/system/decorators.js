@@ -1,4 +1,3 @@
-/// <reference path="../typings/angularjs/angular.d.ts" />
 System.register("decorators", [], function(exports_1) {
     "use strict";
     /**
@@ -309,6 +308,56 @@ System.register("decorators", [], function(exports_1) {
         };
     }
     exports_1("App", App);
+    /**
+     *
+     */
+    function Resource(module, name, url, paramsDefault, actions, options) {
+        if (paramsDefault === void 0) { paramsDefault = {}; }
+        if (actions === void 0) { actions = {}; }
+        if (options === void 0) { options = {}; }
+        return function (target) {
+            angular.element(document).ready(function () {
+                module = resolveModule(module);
+                module.service(name + "__resourceClass", target);
+                module.service(name, ['$injector', (name + "__resourceClass"), function ($injector, resourceClass) {
+                        var resourceProviderName = $injector.has('$cachedResource')
+                            ? '$cachedResource'
+                            : '$resource';
+                        var $resource = $injector.get(resourceProviderName);
+                        var resource = resourceProviderName === '$cachedResource'
+                            ? $resource(name, url, paramsDefault, actions, options)
+                            : $resource(url, paramsDefault, actions, options);
+                        angular.extend(resource, resourceClass);
+                        angular.extend(resource.prototype, resourceClass.prototype);
+                        return resource;
+                    }]);
+            });
+        };
+    }
+    exports_1("Resource", Resource);
+    /**
+     * Declare UIRouter state with decorated class as controller.
+     * @link https://angular-ui.github.io/ui-router/site/#/api/ui.router
+     * Note: controllerAs: $ctrl - User $ctrl for binding to controller in templates
+     * @param {ng.IModule | string} module - name or instance of angular module in which config clause should be defined.
+     * @param {string} stateName - name of UIRouter state state.
+     * @param {ng.ui.IState} [config = {}] - state config params.
+     * @returns {ClassDecorator}
+     */
+    function Page(module, stateName, config) {
+        if (config === void 0) { config = {}; }
+        return function (target) {
+            module = resolveModule(module);
+            module.config(['$stateProvider', function ($stateProvider) {
+                    $stateProvider
+                        .state(stateName, angular.extend({
+                        controller: target,
+                        controllerAs: '$ctrl'
+                    }, config));
+                }]);
+        };
+    }
+    exports_1("Page", Page);
     function resolveModule(module) {
         return (angular.isString(module)
             ? angular.module(module)

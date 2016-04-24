@@ -27,26 +27,26 @@ grunt.initConfig({
         module: 'system',
         declaration: true,
       },
-      files: [{ src: ['src/**/*.ts'], dest: 'dist/system/decorators.js' }],
+      files: [{ src: ['typings/tsd.d.ts', 'src/**/*.ts'], dest: 'dist/system/decorators.js' }],
     },
     es6: {
       options: {
         target: 'es6',
         module: 'es6'
       },
-      files: [{ src: ['src/**/*.ts'], dest: 'dist/es6/' }],
+      files: [{ src: ['typings/tsd.d.ts', 'src/**/*.ts'], dest: 'dist/es6/' }],
     },
     amd: {
       options: {
         module: 'amd'
       },
-      files: [{ src: ['src/**/*.ts'], dest: 'dist/amd/decorators.js' }],
+      files: [{ src: ['typings/tsd.d.ts', 'src/**/*.ts'], dest: 'dist/amd/decorators.js' }],
     },
     commonjs: {
       options: {
         module: 'commonjs',
       },
-      files: [{ src: ['src/**/*.ts'], dest: 'dist/commonjs' }],
+      files: [{ src: ['typings/tsd.d.ts', 'src/**/*.ts'], dest: 'dist/commonjs' }],
     }
   },
   // -----------------------------------------------------------------------------------------------
@@ -91,5 +91,5 @@ grunt.loadNpmTasks('grunt-contrib-uglify');
 grunt.loadNpmTasks('grunt-contrib-clean');
 grunt.loadNpmTasks('grunt-karma');
 
-grunt.registerTask('build', ['clean','ts', 'rename', 'uglify']);
+grunt.registerTask('build', ['clean', 'ts', 'rename', 'uglify']);
 grunt.registerTask('test', ['karma']);
